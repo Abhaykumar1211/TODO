@@ -7,8 +7,10 @@ import { Component,ElementRef, Renderer2, ViewChild } from '@angular/core';
 })
 export class NotecardComponent {
 
-  @ViewChild('truncator') truncator: ElementRef<HTMLElement>;
-  @ViewChild('bodyText') bodyText: ElementRef<HTMLElement>;
+ 
+
+  @ViewChild('truncator') truncator!: ElementRef<HTMLElement>;
+  @ViewChild('bodyText') bodyText!: ElementRef<HTMLElement>;
 
 
   constructor(private renderer: Renderer2){  }
