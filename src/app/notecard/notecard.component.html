@@ -1,18 +1,24 @@
 <div #container class="notecard-container">
 
-    <div class="notecard-content">
-        <h1 class="notecard-title">practice</h1>
+    <a [routerLink]="link">
 
-        <ng-template #bodyText class="notecard-body">
-           <p>
-            This is a practise
-        </p>
+        <div class="notecard-content">
+            <h1 class="notecard-title" >{{title}}</h1>
+            <p>{{body}}</p>
+    
+            <!-- <ng-template #bodyText class="notecard-body">
+               <p>
+               
+            </p>
+    
+               <ng-template #truncator class="fade-out-truncation"></ng-template>
+            </ng-template> -->
+    
+        </div>
 
-           <ng-template #truncator class="fade-out-truncation"></ng-template>
-        </ng-template>
+    </a>
 
-    </div>
-<div class="x-button">
+<div class="x-button"(click)="onXButtonClick()">
 
 </div>
 </div>

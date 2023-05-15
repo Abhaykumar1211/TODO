@@ -7,6 +7,7 @@ import { NotedetailsComponent } from './pages/notedetails/notedetails.component'
 const routes: Routes = [
   { path: '', component: MainLayoutComponent, children:[
     { path:'', component: NoteslistComponent},
+    { path:'new', component: NotedetailsComponent},
     { path:':id', component: NotedetailsComponent}
   ]}
 ];
