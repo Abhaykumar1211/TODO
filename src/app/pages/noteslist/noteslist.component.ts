@@ -89,7 +89,11 @@ import { NotesService } from 'src/app/shared/notes.service';
 
 export class NoteslistComponent {
 
-notes: Note[] =new Array<Note>();
+  notes: Note[] =new Array<Note>();
+  filteredNotes: Note[] = new Array<Note>(); 
+ 
+
+
 
 constructor(private notesService: NotesService){
 
@@ -99,6 +103,7 @@ ngOnInit(){
   // we want to retrieve all notes from Notes Service
 
  this.notes = this.notesService.getAll();
+ this.filteredNotes = this.notes;
 
 
  console.log(this.notes);
@@ -108,7 +113,7 @@ deleteNote(id: number){
   this.notesService.delete(id);
 }
 
-filter(query:string){
+filter(query: string){
   query = query.toLowerCase().trim();
   let allResults: Note[] = new Array<Note>();
 
@@ -120,7 +125,7 @@ filter(query:string){
   terms = this.removeDuplicates(terms);
 
   terms.forEach(word => {
-    let results: Note[] = this.relavantNotes(terms);
+    let results: Note[] = this.relevantNotes(terms);
 
     allResults = [...allResults, ...results]
 
@@ -128,6 +133,7 @@ filter(query:string){
 
   //allResults will include dupicate notes
   let uniqueResults = this.removeDuplicates(allResults);
+  this.filteredNotes = uniqueResults;
 
 
 }
@@ -139,16 +145,20 @@ removeDuplicates(arr: Array<any>) : Array<any> {
 
   return Array.from(uniqueResults);
 }
-relavantNotes(query: any) : Array<Note>{ 
+relevantNotes(query: any): Note[] {
+  query = (query || '').toString().toLowerCase().trim();
 
-  query = query.toLowerCase().trim();
-  let relevantNotes = this.notes.filter(note => {
-    if (note?.body?.toLowerCase().includes(query) || note?.title?.toLowerCase().includes(query)){
-      return true;
-    }
-    return false;
-  })
+  if (query === '') {
+    return this.notes; // Return all notes when the query is empty
+  }
 
-return relevantNotes;
+  var relevantNotes = this.notes.filter(note => {
+    var title = (note.title || '').toString().toLowerCase();
+    var body = (note.body || '').toString().toLowerCase();
+
+    return title.includes(query) || body.includes(query);
+  });
+
+  return relevantNotes;
 }
 }
